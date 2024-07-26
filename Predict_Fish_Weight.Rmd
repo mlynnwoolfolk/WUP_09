@@ -123,10 +123,51 @@ summary.lm(Pike2)
 
 ### Best Two regressor model
 
+The best two regressor model to predict weight is length1 and length3. 
+
 ## Roach
+
+```{r}
+roachModel=lm(Weight~.,data=Roach)
+summary.lm(pikeModel)
+```
+
+
 
 ### Best Models
 
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Roach,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+
+
 ### Best Two regressor model
 
+```{r}
+Roach2Model=lm(Weight~Length3+Width,data=Roach)
+summary.lm(Roach2Model)
+```
+The best regressor models for predicting weight for roach are width and length3. 
+
 ## Final Summary Statements
+
+The best regressor modles for perch were height and width.
+
+The best regressor for pike were length 1 and length 3.
+
+The best regressor modles for roach were length 3 and width. 
+
+
+
